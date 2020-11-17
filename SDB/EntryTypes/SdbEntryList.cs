@@ -20,7 +20,7 @@ namespace SDB.EntryTypes
 
         public SdbFile.TagValue TypeId { get; }
 
-        [IgnoreDataMember] public byte[] Bytes { get; }
+        public byte[] Bytes { get; }
 
         public object Value => TypeId.ToString();
 

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Runtime.Serialization;
 using System.Text;
 
 namespace SDB.EntryTypes
@@ -19,7 +18,7 @@ namespace SDB.EntryTypes
 
         public SdbFile.TagValue TypeId { get; }
 
-        [IgnoreDataMember] public byte[] Bytes { get; }
+        public byte[] Bytes { get; }
 
         public object Value => Encoding.Unicode.GetString(Bytes).Trim('\0');
 

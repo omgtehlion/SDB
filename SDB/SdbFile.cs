@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using NLog;
 using SDB.EntryTypes;
 
 namespace SDB
@@ -305,9 +304,7 @@ namespace SDB
             MajorVersion = BitConverter.ToInt32(rawBytes, 0);
             MinorVersion = BitConverter.ToInt32(rawBytes, 4);
 
-            var logger = LogManager.GetCurrentClassLogger();
-
-            logger.Debug($"Major: {MajorVersion}, Minor: {MinorVersion}");
+            //logger.Debug($"Major: {MajorVersion}, Minor: {MinorVersion}");
 
             var index = 0xc;
 

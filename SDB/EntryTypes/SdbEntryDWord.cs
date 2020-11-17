@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 
 namespace SDB.EntryTypes
 {
@@ -20,7 +19,7 @@ namespace SDB.EntryTypes
 
         public SdbFile.TagValue TypeId { get; }
 
-        [IgnoreDataMember] public byte[] Bytes { get; }
+        public byte[] Bytes { get; }
 
         public object Value => BitConverter.ToInt32(Bytes, 0);
 

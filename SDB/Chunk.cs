@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using System.Text;
-using NLog;
 using SDB.EntryTypes;
 
 namespace SDB
@@ -14,9 +12,7 @@ namespace SDB
             TypeId = typeId;
             Bytes = bytes;
 
-            var logger = LogManager.GetCurrentClassLogger();
-
-            logger.Debug($"Chunk ID: {typeId} ({typeId:X}) bytes length: 0x{Bytes.Length:X}");
+            //logger.Debug($"Chunk ID: {typeId} ({typeId:X}) bytes length: 0x{Bytes.Length:X}");
 
             var index = 0x0;
 
@@ -34,7 +30,7 @@ namespace SDB
 
                 var tagTypeInt = (int) id1 & 0xF000;
 
-                logger.Debug($"While loop TagType {tagTypeInt:X}, Id: {id1} (0x{id1:X})");
+                //logger.Debug($"While loop TagType {tagTypeInt:X}, Id: {id1} (0x{id1:X})");
 
                 index += 2;
 
@@ -167,7 +163,7 @@ namespace SDB
 
         public SdbFile.TagValue TypeId { get; }
 
-        [IgnoreDataMember] public byte[] Bytes { get; }
+        public byte[] Bytes { get; }
 
         private static void UpdateMetrics(SdbFile file, SdbFile.TagValue tagId)
         {
