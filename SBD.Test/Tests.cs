@@ -22,9 +22,9 @@ namespace SBD.Test
                 //    File.WriteAllText($@"C:\temp\sdb\{Path.GetFileName(file)}.json", ss.Children.ToJson());
 
                 Debug.WriteLine("METRICS");
-                foreach (var metricsKey in SdbFile.Metrics.Keys)
+                foreach (var metricsKey in ss.Metrics.Keys)
                 {
-                    Debug.WriteLine($"{metricsKey} (0x{metricsKey:X}): {SdbFile.Metrics[metricsKey]}");
+                    Debug.WriteLine($"{metricsKey} (0x{metricsKey:X}): {ss.Metrics[metricsKey]}");
                 }
 
 //                foreach (var chunk in ss.Children)

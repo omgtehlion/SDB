@@ -6,11 +6,14 @@ namespace SDB.EntryTypes
 {
     public class SdbEntryStringRef : ISdbEntry
     {
-        public SdbEntryStringRef(SdbFile.TagValue typeId, byte[] bytes, int offset)
+        readonly SdbFile File;
+
+        public SdbEntryStringRef(SdbFile file, SdbFile.TagValue typeId, byte[] bytes, int offset)
         {
             TypeId = typeId;
             Bytes = bytes;
             Offset = offset;
+            File = file;
 
             Children = new List<ISdbEntry>();
         }
@@ -28,7 +31,7 @@ namespace SDB.EntryTypes
         private object GetValue()
         {
             var stringOffset = BitConverter.ToInt32(Bytes, 0);
-            return SdbFile.StringTableEntries[stringOffset].Value;
+            return File.StringTableEntries[stringOffset].Value;
         }
 
         public override string ToString()

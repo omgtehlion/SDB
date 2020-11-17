@@ -9,7 +9,7 @@ namespace SDB
 {
     internal class Chunk
     {
-        internal Chunk(SdbFile.TagValue typeId, byte[] bytes, int baseOffset)
+        internal Chunk(SdbFile file, SdbFile.TagValue typeId, byte[] bytes, int baseOffset)
         {
             TypeId = typeId;
             Bytes = bytes;
@@ -52,7 +52,7 @@ namespace SDB
 
                 var tagType = (SdbFile.TagType) tagTypeInt;
 
-                UpdateMetrics(id1);
+                UpdateMetrics(file, id1);
 
                 switch (tagType)
                 {
@@ -98,7 +98,7 @@ namespace SDB
                     case SdbFile.TagType.TAG_TYPE_STRINGREF:
                         buff = new byte[4];
                         Buffer.BlockCopy(bytes, index, buff, 0, 4);
-                        var sr = new SdbEntryStringRef(id1, buff, baseOffset + index);
+                        var sr = new SdbEntryStringRef(file, id1, buff, baseOffset + index);
                         Children.Add(sr);
 
                         index += 4;
@@ -109,7 +109,7 @@ namespace SDB
                         buff = new byte[size];
                         Buffer.BlockCopy(bytes, index, buff, 0, size);
 
-                        var c = new Chunk(id1, buff, baseOffset + index);
+                        var c = new Chunk(file, id1, buff, baseOffset + index);
 
                         var l = new SdbEntryList(id1, buff, baseOffset + index);
 
@@ -136,7 +136,7 @@ namespace SDB
 
                         //this provides a means to do easy string lookups based on relative offset
                         var sti = new StringTableEntry(index, Encoding.Unicode.GetString(buff, 0, size).Trim('\0'));
-                        SdbFile.StringTableEntries.Add(sti.Offset, sti);
+                        file.StringTableEntries.Add(sti.Offset, sti);
 
                         //this is the structure itself that defines the strings found in the database
                         var st = new SdbEntryStringTableItem(id1, buff, baseOffset + index - 4);
@@ -169,14 +169,14 @@ namespace SDB
 
         [IgnoreDataMember] public byte[] Bytes { get; }
 
-        private static void UpdateMetrics(SdbFile.TagValue tagId)
+        private static void UpdateMetrics(SdbFile file, SdbFile.TagValue tagId)
         {
-            if (SdbFile.Metrics.ContainsKey(tagId) == false)
+            if (file.Metrics.ContainsKey(tagId) == false)
             {
-                SdbFile.Metrics.Add(tagId, 0);
+                file.Metrics.Add(tagId, 0);
             }
 
-            SdbFile.Metrics[tagId] += 1;
+            file.Metrics[tagId] += 1;
         }
     }
 }

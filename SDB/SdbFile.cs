@@ -335,7 +335,7 @@ namespace SDB
                     var buff = new byte[size];
                     Buffer.BlockCopy(rawBytes, index, buff, 0, size);
 
-                    var c = new Chunk(id, buff, index - 2 - 4);
+                    var c = new Chunk(this, id, buff, index - 2 - 4);
 
                     var l = new SdbEntryList(id, buff, index - 2 - 4);
 
@@ -368,9 +368,9 @@ namespace SDB
 
         public List<ISdbEntry> Children { get; }
 
-        public static Dictionary<int, StringTableEntry> StringTableEntries { get; } = new Dictionary<int, StringTableEntry>();
+        public Dictionary<int, StringTableEntry> StringTableEntries { get; } = new Dictionary<int, StringTableEntry>();
 
-        public static Dictionary<TagValue, int> Metrics { get; } = new Dictionary<TagValue, int>();
+        public Dictionary<TagValue, int> Metrics { get; } = new Dictionary<TagValue, int>();
 
         public string SourceFile { get; }
 
